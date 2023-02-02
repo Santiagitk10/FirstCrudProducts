@@ -9,7 +9,7 @@ namespace DrivenAdapters.Mongo.Entities
     /// <summary>
     /// EntityAdapter
     /// </summary>
-    public class EntityAdapter : ITestEntityRepository
+    public class EntityAdapter : IProductoRepository
     {
         private readonly IMapper mapper;
         private readonly ILogger<EntityAdapter> _logger;
@@ -41,21 +41,21 @@ namespace DrivenAdapters.Mongo.Entities
         /// <returns>
         /// Entity list
         /// </returns>
-        public List<Domain.Model.Entities.Entity> FindAll(Domain.Model.Entities.Entity entity = null)
+        public List<Domain.Model.Entities.Producto> FindAll(Domain.Model.Entities.Producto entity = null)
         {
             _logger.LogInformation("Entro al adapter en: {time}", DateTimeOffset.Now);
             if (entity == null)
             {
                 try
                 {
-                    return mapper.Map<List<Domain.Model.Entities.Entity>>(new List<Domain.Model.Entities.Entity> { new Domain.Model.Entities.Entity { Id = Guid.NewGuid(), descrip = "Test" } });
+                    return mapper.Map<List<Domain.Model.Entities.Producto>>(new List<Domain.Model.Entities.Producto> { new Domain.Model.Entities.Producto { Id = Guid.NewGuid(), descrip = "Test" } });
                 }
                 catch (Exception ex)
                 {
                     throw;
                 }
             }
-            return mapper.Map<List<Domain.Model.Entities.Entity>>(new List<Domain.Model.Entities.Entity> { new Domain.Model.Entities.Entity { Id = entity.Id, descrip = entity.descrip } });
+            return mapper.Map<List<Domain.Model.Entities.Producto>>(new List<Domain.Model.Entities.Producto> { new Domain.Model.Entities.Producto { Id = entity.Id, descrip = entity.descrip } });
         }
     }
 }

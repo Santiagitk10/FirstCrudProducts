@@ -14,14 +14,14 @@ namespace Domain.Model.Interfaces
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        List<Entity> GetAllUsers(Entity entity = null);
+        List<Producto> GetAllUsers(Producto entity = null);
 
         /// <summary>
         /// Finds all.
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        List<Entity> FindAll(Entity entity = null);
+        List<Producto> FindAll(Producto entity = null);
 
         /// <summary>
         /// Consoles the process log.

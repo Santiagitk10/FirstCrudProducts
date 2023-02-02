@@ -33,7 +33,7 @@ namespace Domain.UseCase.Common
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        public List<Entity> FindAll(Entity entity = null)
+        public List<Producto> FindAll(Producto entity = null)
         {
             return testEntityRepository.FindAll(entity);
         }
@@ -43,7 +43,7 @@ namespace Domain.UseCase.Common
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns></returns>
-        public List<Entity> GetAllUsers(Entity entity = null)
+        public List<Producto> GetAllUsers(Producto entity = null)
         {
             return testEntityRepository.FindAll(entity);
         }

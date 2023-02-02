@@ -35,7 +35,7 @@ namespace EntryPoints.ReactiveWeb.Controllers
         }
 
         /// <summary>
-        /// Obtiene todos los objetos de tipo <see cref="Entity"/>
+        /// Obtiene todos los objetos de tipo <see cref="Producto"/>
         /// </summary>
         /// <returns></returns>
         /// <response code="200">Retorna la lista</response>
@@ -45,7 +45,7 @@ namespace EntryPoints.ReactiveWeb.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(406)]
         [HttpGet()]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Entity>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Producto>))]
         public async Task<IActionResult> Get()
         {
             _logger.LogInformation("Entro al controlador en: {time}", DateTimeOffset.Now);
@@ -59,8 +59,8 @@ namespace EntryPoints.ReactiveWeb.Controllers
         /// <param name="entity"></param>
         /// <returns></returns>
         [HttpPost()]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Entity>))]
-        public async Task<IActionResult> Create([FromBody] Entity entity)
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Producto>))]
+        public async Task<IActionResult> Create([FromBody] Producto entity)
         {
             var respuestaNegocio = testNegocio.GetAllUsers(entity);
             return await ProcesarResultado(Exito(Build(Request.Path.Value, 0, "", "co", respuestaNegocio)));
