@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Model.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,11 @@ using System.Threading.Tasks;
 
 namespace Domain.UseCase.Productos
 {
-    internal interface IProductoUseCase
+    /// <summary>
+    /// Producto UseCase
+    /// </summary>
+    public interface IProductoUseCase
     {
+        Task<Producto> CrearProducto(Producto producto);
     }
 }

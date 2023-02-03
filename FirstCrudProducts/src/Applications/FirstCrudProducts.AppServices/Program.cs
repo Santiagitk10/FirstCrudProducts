@@ -25,8 +25,7 @@ builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonProvider();
 
-
-builder.Configuration.AddKeyVaultProvider();
+//builder.Configuration.AddKeyVaultProvider();
 
 builder.Host.UseSerilog((ctx, lc) => lc
        .WriteTo.Console()
@@ -36,9 +35,9 @@ builder.Host.UseSerilog((ctx, lc) => lc
 
 builder.Services.Configure<ConfiguradorAppSettings>(builder.Configuration.GetRequiredSection(nameof(ConfiguradorAppSettings)));
 ConfiguradorAppSettings appSettings = builder.Configuration.GetSection(nameof(ConfiguradorAppSettings)).Get<ConfiguradorAppSettings>();
-Secrets secrets = builder.Configuration.ResolveSecrets<Secrets>();
+//Secrets secrets = builder.Configuration.ResolveSecrets<Secrets>();
+Secrets secrets = builder.Configuration.GetSection(nameof(Secrets)).Get<Secrets>();
 string country = EnvironmentHelper.GetCountryOrDefault(appSettings.DefaultCountry);
-
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -47,8 +46,6 @@ builder.Services.AddSwaggerGen();
 builder.Configuration.AddMongoProvider(
     nameof(MongoConfigurationProvider), secrets.MongoConnection, country);
 
-
-
 #region Service Configuration
 
 string policyName = "cors";
@@ -56,9 +53,9 @@ builder.Services
     .RegisterCors(policyName)
     .RegisterAutoMapper()
     .RegisterMongo(secrets.MongoConnection, $"{appSettings.Database}_{country}")
-    .RegisterBlobstorage(secrets.StorageConnection, appSettings.StorageContainerName)
-    .RegisterRedis(secrets.RedisConnection, 0)
-    .RegisterAutoMapper()
+    //.RegisterBlobstorage(secrets.StorageConnection, appSettings.StorageContainerName)
+    //.RegisterRedis(secrets.RedisConnection, 0)
+    //.RegisterAutoMapper()
     .RegisterServices()
     .AddVersionedApiExplorer()
     .HabilitarVesionamiento()
@@ -80,7 +77,8 @@ var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>()
 
 if (!app.Environment.IsProduction())
 {
-    IWebHostEnvironment env = builder.Environment;
+    //The env variable is not being used
+    //IWebHostEnvironment env = builder.Environment;
     app.UseDeveloperExceptionPage();
     app.UseSwagger((c) =>
     {

@@ -1,6 +1,8 @@
 using Domain.Model.Entities;
 using Domain.Model.Interfaces;
+using Domain.UseCase.Productos;
 using EntryPoints.ReactiveWeb.Base;
+using EntryPoints.ReactiveWeb.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,58 +14,34 @@ using static credinet.exception.middleware.models.ResponseEntity;
 namespace EntryPoints.ReactiveWeb.Controllers
 {
     /// <summary>
-    /// EntityController
+    /// ProductoController
     /// </summary>
+    [ApiController]
     [Produces("application/json")]
     [ApiVersion("1.0")]
-    [Route("api/[controller]/[action]")]
-    public class EntityController : AppControllerBase<EntityController>
+    [Route("api/[controller]")]
+    public class ProductoController : AppControllerBase<ProductoController>
     {
-        private readonly IManageEventsUseCase testNegocio;
-        private readonly ILogger<EntityController> _logger;
+        private readonly IProductoUseCase _productoUseCase;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EntityController"/> class.
+        /// Initializes a new instance of the <see cref="ProductoController"/> class.
         /// </summary>
-        /// <param name="testNegocio">The test negocio.</param>
-        /// <param name="logger">The logger.</param>
-        public EntityController(IManageEventsUseCase testNegocio, ILogger<EntityController> logger) :
-            base(testNegocio)
+        /// <param name="eventsService"></param>
+        /// <param name="productoUseCase"></param>
+        public ProductoController(IManageEventsUseCase eventsService, IProductoUseCase productoUseCase) :
+            base(eventsService)
         {
-            _logger = logger;
-            this.testNegocio = testNegocio;
+            _productoUseCase = productoUseCase;
         }
 
-        /// <summary>
-        /// Obtiene todos los objetos de tipo <see cref="Producto"/>
-        /// </summary>
-        /// <returns></returns>
-        /// <response code="200">Retorna la lista</response>
-        /// <response code="400">Si existe algun problema al consultar</response>
-        /// <response code="406">Si no se envia el ambiente correcto</response>
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(406)]
-        [HttpGet()]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Producto>))]
-        public async Task<IActionResult> Get()
-        {
-            _logger.LogInformation("Entro al controlador en: {time}", DateTimeOffset.Now);
-            var respuestaNegocio = testNegocio.GetAllUsers();
-            return await ProcesarResultado(Exito(Build(Request.Path.Value, 0, "", "co", respuestaNegocio)));
-        }
-
-        /// <summary>
-        /// Create
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-        [HttpPost()]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Producto>))]
-        public async Task<IActionResult> Create([FromBody] Producto entity)
-        {
-            var respuestaNegocio = testNegocio.GetAllUsers(entity);
-            return await ProcesarResultado(Exito(Build(Request.Path.Value, 0, "", "co", respuestaNegocio)));
-        }
+        [HttpPost]
+        public async Task<IActionResult> CrearProducto(ProductoRequest productoRequest) =>
+            await HandleRequestAsync(
+                async () =>
+                {
+                    Producto nuevoProducto = productoRequest.AsEntity();
+                    return await _productoUseCase.CrearProducto(nuevoProducto);
+                }, "");
     }
 }

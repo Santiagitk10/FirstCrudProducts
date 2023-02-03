@@ -9,8 +9,8 @@ namespace DrivenAdapters.Mongo
     public interface IContext
     {
         /// <summary>
-        /// Colleccion de Tipo Contrato
+        /// Productos
         /// </summary>
-        public IMongoCollection<Entity> TipoContrato { get; }
+        public IMongoCollection<ProductoEntity> Productos { get; }
     }
 }

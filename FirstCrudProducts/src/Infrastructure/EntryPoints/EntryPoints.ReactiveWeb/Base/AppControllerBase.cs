@@ -41,7 +41,7 @@ namespace EntryPoints.ReactiveWeb.Base
         /// <param name="requestHandler"></param>
         /// <param name="logId"></param>
         /// <returns></returns>
-        public async Task<IActionResult> HandleRequest<TResult>(Func<Task<TResult>> requestHandler, string logId)
+        public async Task<IActionResult> HandleRequestAsync<TResult>(Func<Task<TResult>> requestHandler, string logId)
         {
             string actionName = ControllerContext.RouteData.Values["action"].ToString();
             string controllerName = ControllerContext.RouteData.Values["controller"].ToString();

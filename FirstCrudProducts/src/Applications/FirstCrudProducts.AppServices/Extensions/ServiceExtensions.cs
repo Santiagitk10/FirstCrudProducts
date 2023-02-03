@@ -3,13 +3,13 @@ using credinet.comun.api;
 using Domain.Model.Entities.Gateway;
 using Domain.Model.Interfaces;
 using Domain.UseCase.Common;
-using DrivenAdapter.Files;
 using DrivenAdapters.Mongo;
 using DrivenAdapters.Mongo.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using FirstCrudProducts.AppServices.Automapper;
 using StackExchange.Redis;
 using System;
+using Domain.UseCase.Productos;
 
 namespace FirstCrudProducts.AppServices.Extensions
 {
@@ -54,21 +54,6 @@ namespace FirstCrudProducts.AppServices.Extensions
                                     services.AddSingleton<IContext>(provider => new Context(connectionString, db));
 
         /// <summary>
-        /// Registro del blobstorage
-        /// </summary>
-        /// <param name="services">Contenedor de servicios</param>
-        /// <param name="connectionString">cadena de conexion del storage</param>
-        /// <param name="containerName">nombre del contenedor del storage</param>
-        /// <returns></returns>
-        public static IServiceCollection RegisterBlobstorage(this IServiceCollection services, string connectionString, string containerName)
-        {
-            //Blob storage
-            //TODO: Buscar si existe mejor implementacion de la DI
-            services.AddSingleton<IBlobStorage>(provider => new BlobStorage(containerName, connectionString));
-            return services;
-        }
-
-        /// <summary>
         ///   Método para registrar Redis Cache
         /// </summary>
         /// <param name="services">services.</param>
@@ -101,13 +86,14 @@ namespace FirstCrudProducts.AppServices.Extensions
 
             #region Adaptadores
 
-            services.AddScoped<ITestEntityRepository, EntityAdapter>();
+            services.AddScoped<IProductoRepository, ProductoRepository>();
 
             #endregion Adaptadores
 
             #region UseCases
 
             services.AddScoped<IManageEventsUseCase, ManageEventsUseCase>();
+            services.AddScoped<IProductoUseCase, ProductoUseCase>();
 
             #endregion UseCases
 

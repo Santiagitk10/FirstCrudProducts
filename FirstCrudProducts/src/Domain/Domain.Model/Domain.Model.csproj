@@ -12,12 +12,8 @@
     <DocumentationFile>bin\Release\$(NetCoreTargetVersion)\Domain.Entities.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Entities\" />
-    <Folder Include="Entities\Gateway" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Entities\Gateway\ITestEntityRepository.cs"></None>
-    <None Include="Entities\Entity.cs"></None>
+    <None Include="Entities\Gateway\IProductoRepository.cs"></None>
+    <None Include="Entities\Producto.cs"></None>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="$(AutoMapper)" />

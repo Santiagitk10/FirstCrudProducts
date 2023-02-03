@@ -1,5 +1,6 @@
 using DrivenAdapters.Mongo.Entities;
 using MongoDB.Driver;
+using SharpCompress.Common;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DrivenAdapters.Mongo
@@ -24,8 +25,8 @@ namespace DrivenAdapters.Mongo
         }
 
         /// <summary>
-        /// Tipo Contrato Entity
+        /// <see cref="IContext.Productos"/>
         /// </summary>
-        public IMongoCollection<Entity> TipoContrato => _database.GetCollection<Entity>("TipoContrato");
+        public IMongoCollection<ProductoEntity> Productos => _database.GetCollection<ProductoEntity>("Productos");
     }
 }
