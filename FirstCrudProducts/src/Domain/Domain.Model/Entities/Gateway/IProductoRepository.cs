@@ -16,9 +16,9 @@ namespace Domain.Model.Entities.Gateway
         Task<Producto> CrearProducto(Producto producto);
 
         /// <summary>
-        /// FindAll
+        /// Obtener todos los productos
         /// </summary>
         /// <returns>Entity list</returns>
-        //List<Producto> FindAll(Producto entity = null);
+        Task<List<Producto>> ObtenerProductos();
     }
 }

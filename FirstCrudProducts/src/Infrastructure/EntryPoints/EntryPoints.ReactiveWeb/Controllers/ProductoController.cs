@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using static credinet.comun.negocio.RespuestaNegocio<credinet.exception.middleware.models.ResponseEntity>;
 using static credinet.exception.middleware.models.ResponseEntity;
+using Microsoft.AspNetCore.Http;
 
 namespace EntryPoints.ReactiveWeb.Controllers
 {
@@ -43,5 +44,14 @@ namespace EntryPoints.ReactiveWeb.Controllers
                     Producto nuevoProducto = productoRequest.AsEntity();
                     return await _productoUseCase.CrearProducto(nuevoProducto);
                 }, "");
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> ObtenerProductos() =>
+            await HandleRequestAsync(
+                    async () =>
+                        {
+                            return await _productoUseCase.ObtenerProductos();
+                        }, "");
     }
 }

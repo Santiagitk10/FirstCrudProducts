@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace DrivenAdapters.Mongo
 {
+    /// <summary>
+    /// Product Adapter
+    /// </summary>
     public class ProductoRepository : IProductoRepository
     {
         private readonly IMongoCollection<ProductoEntity> _coleccionProductos;
@@ -23,6 +26,11 @@ namespace DrivenAdapters.Mongo
             _coleccionProductos = mongodb.Productos;
         }
 
+        /// <summary>
+        /// <see cref="IProductoRepository."/>
+        /// </summary>
+        /// <param name="producto"></param>
+        /// <returns></returns>
         public async Task<Producto> CrearProducto(Producto producto)
         {
             ProductoEntity nuevoProducto =
@@ -31,6 +39,17 @@ namespace DrivenAdapters.Mongo
             await _coleccionProductos.InsertOneAsync(nuevoProducto);
 
             return nuevoProducto.AsEntity();
+        }
+
+        public async Task<List<Producto>> ObtenerProductos()
+        {
+            IAsyncCursor<ProductoEntity> productosEntity =
+                await _coleccionProductos.FindAsync(Builders<ProductoEntity>.Filter.Empty);
+
+            List<Producto> productos = productosEntity.ToEnumerable()
+                .Select(productoEntity => productoEntity.AsEntity()).ToList();
+
+            return productos;
         }
     }
 }

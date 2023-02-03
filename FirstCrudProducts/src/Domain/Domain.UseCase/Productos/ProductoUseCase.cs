@@ -33,5 +33,12 @@ namespace Domain.UseCase.Productos
         {
             return await _ProductoRepository.CrearProducto(producto);
         }
+
+        /// <summary>
+        /// <see cref="IProductoUseCase.ObtenerProductos"/>
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Producto>> ObtenerProductos() =>
+         await _ProductoRepository.ObtenerProductos();
     }
 }

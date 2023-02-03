@@ -12,6 +12,17 @@ namespace Domain.UseCase.Productos
     /// </summary>
     public interface IProductoUseCase
     {
+        /// <summary>
+        /// Crear Producto
+        /// </summary>
+        /// <param name="producto"></param>
+        /// <returns></returns>
         Task<Producto> CrearProducto(Producto producto);
+
+        /// <summary>
+        /// Obtener todos los productos
+        /// </summary>
+        /// <returns></returns>
+        Task<List<Producto>> ObtenerProductos();
     }
 }
