@@ -24,5 +24,11 @@ namespace Domain.UseCase.Productos
         /// </summary>
         /// <returns></returns>
         Task<List<Producto>> ObtenerProductos();
+
+        /// <summary>
+        /// Modificar Producto
+        /// </summary>
+        /// <returns></returns>
+        Task ModificarProducto(Producto producto);
     }
 }

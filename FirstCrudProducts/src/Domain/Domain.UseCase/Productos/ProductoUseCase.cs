@@ -40,5 +40,10 @@ namespace Domain.UseCase.Productos
         /// <returns></returns>
         public async Task<List<Producto>> ObtenerProductos() =>
          await _ProductoRepository.ObtenerProductos();
+
+        public async Task ModificarProducto(Producto producto)
+        {
+            await _ProductoRepository.ModificarProducto(producto);
+        }
     }
 }

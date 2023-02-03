@@ -1,6 +1,7 @@
 ﻿using Domain.Model.Entities;
 using Domain.Model.Entities.Gateway;
 using DrivenAdapters.Mongo.Entities;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace DrivenAdapters.Mongo
     public class ProductoRepository : IProductoRepository
     {
         private readonly IMongoCollection<ProductoEntity> _coleccionProductos;
+        private readonly FilterDefinitionBuilder<ProductoEntity> _filter = Builders<ProductoEntity>.Filter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductoRepository"/> class.
@@ -41,6 +43,10 @@ namespace DrivenAdapters.Mongo
             return nuevoProducto.AsEntity();
         }
 
+        /// <summary>
+        /// <see cref="IProductoRepository.ObtenerProductos()"/>
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<Producto>> ObtenerProductos()
         {
             IAsyncCursor<ProductoEntity> productosEntity =
@@ -50,6 +56,19 @@ namespace DrivenAdapters.Mongo
                 .Select(productoEntity => productoEntity.AsEntity()).ToList();
 
             return productos;
+        }
+
+        /// <summary>
+        /// <see cref="IProductoRepository.UpdateProduct(int, Producto)"/>
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="producto"></param>
+        /// <returns></returns>
+        public async Task ModificarProducto(Producto producto)
+        {
+            var filter = _filter.Eq(p => p.Id, producto.Id);
+            var updateDef = new BsonDocumentUpdateDefinition<ProductoEntity>(producto.ToBsonDocument());
+            await _coleccionProductos.FindOneAndUpdateAsync<ProductoEntity>(filter, updateDef);
         }
     }
 }

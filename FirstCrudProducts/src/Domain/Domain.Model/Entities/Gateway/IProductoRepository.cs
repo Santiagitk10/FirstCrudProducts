@@ -20,5 +20,13 @@ namespace Domain.Model.Entities.Gateway
         /// </summary>
         /// <returns>Entity list</returns>
         Task<List<Producto>> ObtenerProductos();
+
+        /// <summary>
+        /// Modificar un producto
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="producto"></param>
+        /// <returns></returns>
+        Task ModificarProducto(Producto producto);
     }
 }

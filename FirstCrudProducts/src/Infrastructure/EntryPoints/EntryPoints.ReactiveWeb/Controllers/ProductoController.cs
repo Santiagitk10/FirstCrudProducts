@@ -53,5 +53,14 @@ namespace EntryPoints.ReactiveWeb.Controllers
                         {
                             return await _productoUseCase.ObtenerProductos();
                         }, "");
+
+        [HttpPut("/{id}")]
+        public async Task<IActionResult> ModificarProducto([FromQuery] string id, ProductoRequest productoRequest) =>
+            await HandleRequestAsync(
+                async () =>
+                {
+                    Producto productoAModificar = productoRequest.AsEntityWithID(id);
+                    await _productoUseCase.ModificarProducto(productoAModificar);
+                }, "");
     }
 }

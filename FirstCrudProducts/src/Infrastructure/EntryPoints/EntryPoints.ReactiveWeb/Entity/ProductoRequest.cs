@@ -45,5 +45,10 @@ namespace EntryPoints.ReactiveWeb.Entity
         {
             return new Producto(Nombre, EnInventario, EstaDisponible, Precio, Peso);
         }
+
+        public Producto AsEntityWithID(string id)
+        {
+            return new Producto(id, Nombre, EnInventario, EstaDisponible, Precio, Peso);
+        }
     }
 }
